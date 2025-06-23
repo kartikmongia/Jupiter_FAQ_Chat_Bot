@@ -56,3 +56,44 @@ To run this project locally:
 
 ✅ 1. Clone or Save the Repository
 Save your main file as chatbot_app.py (or any .py file).
+
+✅ 2. Create a Virtual Environment (Recommended)
+bash
+Copy
+Edit
+python -m venv venv
+# Activate:
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+
+✅ 3. Install Dependencies
+bash
+Copy
+Edit
+pip install streamlit requests beautifulsoup4 pandas transformers sentence-transformers faiss-cpu torch numpy
+▶️ Running the Application
+Start the app by running:
+
+bash
+Copy
+Edit
+streamlit run chatbot_app.py
+This will launch the chatbot in your default web browser.
+
+📁 Project Structure
+chatbot_app.py – Main script containing the complete logic.
+
+load_and_process_faq_data() – Handles scraping, cleaning, deduplication, categorization
+
+load_models_and_create_index() – Loads models & sets up FAISS index
+
+paraphrase_answer() – (Optional) Paraphrasing using T5 model
+
+find_best_faq_match() – Performs semantic search and threshold filtering
+
+Streamlit UI logic – Manages chat interface, user input, and session state
+
+
