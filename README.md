@@ -96,4 +96,5 @@ find_best_faq_match() – Performs semantic search and threshold filtering
 
 Streamlit UI logic – Manages chat interface, user input, and session state
 
+https://github.com/kartikmongia/Jupiter_FAQ_Chat_Bot/blob/main/Screenshot%202025-06-24%20104440.png?raw=true
 
