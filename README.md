@@ -1,79 +1,99 @@
-Jupiter FAQ Chatbot (Streamlit)
-Overview
-This project develops a human-friendly FAQ chatbot for Jupiter's services. It scrapes existing FAQ data from the Jupiter Money website, preprocesses it, and then uses semantic search to provide intelligent, conversational, and accurate answers to user queries. The application is built using Streamlit, providing an interactive web interface.
+🚀 Jupiter FAQ Chatbot (Streamlit) Overview
+This project develops a human-friendly FAQ chatbot for Jupiter's services. It scrapes FAQ data from the Jupiter Money website, preprocesses it, and uses semantic search to provide intelligent, conversational, and accurate answers. The application is built using Streamlit, providing an interactive web interface.
 
-Features
+🌟 Features
 Web Scraping: Automatically extracts FAQ questions and answers from the Jupiter Money contact/help page.
 
 Data Preprocessing: Cleans and normalizes scraped text, removes duplicate questions, and categorizes FAQs into topics like KYC, Rewards, Payments, and Limits.
 
-Semantic Search: Utilizes SentenceTransformer embeddings (all-MiniLM-L6-v2) and FAISS (Facebook AI Similarity Search) for efficient and accurate retrieval of the most semantically similar FAQ answer to a user's query.
+Semantic Search: Utilizes SentenceTransformer embeddings (all-MiniLM-L6-v2) and FAISS (Facebook AI Similarity Search) for fast, accurate semantic matching.
 
-Confidence Handling: Implements a threshold-based mechanism to determine if a relevant answer is found, responding gracefully if unsure.
+Confidence Handling: Uses a threshold-based mechanism to determine if a relevant answer exists and responds gracefully when unsure.
 
-Conversational Interface: Provides a user-friendly chat experience using Streamlit's chat elements, maintaining conversation history.
+Conversational Interface: Streamlit's chat interface maintains a natural user experience and retains conversation history.
 
-Model Caching: Leverages Streamlit's @st.cache_resource to optimize performance by loading models and processing data only once.
+Model Caching: Implements @st.cache_resource to optimize performance by loading models and processing data only once.
 
-(Optional) Answer Paraphrasing: Includes functionality using prithivida/parrot_paraphraser_on_T5 to rephrase answers into more natural language (currently commented out but integrated).
+(Optional) Answer Paraphrasing: Includes a T5-based model (prithivida/parrot_paraphraser_on_T5) to rephrase answers (currently commented out but integrated).
 
-How it Works
-Scraping: The application fetches the HTML content from https://jupiter.money/contact/ and extracts question-answer pairs from the designated FAQ section.
+⚙️ How it Works
+🔹 Scraping
+Fetches HTML content from https://jupiter.money/contact/
 
-Cleaning & Structuring: Extracted data is cleaned (e.g., whitespace removal, special character stripping) and stored in a Pandas DataFrame. Duplicate questions are identified and removed based on their cleaned text.
+Extracts question-answer pairs from the FAQ section
 
-Categorization: Questions are assigned categories based on keywords.
+🔹 Cleaning & Structuring
+Removes extra whitespace, special characters
 
-Embedding: Each FAQ question is converted into a high-dimensional vector (embedding) using the all-MiniLM-L6-v2 Sentence Transformer model.
+Stores cleaned data in a Pandas DataFrame
 
-Indexing: These embeddings are added to a FAISS index, enabling fast nearest-neighbor search.
+Removes duplicate questions
 
-User Interaction:
+🔹 Categorization
+Assigns categories to questions using keyword-based logic
 
-A user types a question into the Streamlit chat interface.
+🔹 Embedding
+Converts each FAQ question into a vector embedding using all-MiniLM-L6-v2
 
-The user's question is embedded using the same Sentence Transformer model.
+🔹 Indexing
+Uses FAISS for fast nearest-neighbor search
 
-The embedding is used to query the FAISS index to find the most similar FAQ question.
+🔹 User Interaction
+User types a question in the Streamlit chat interface
 
-If the similarity score (distance) is below a predefined threshold, the corresponding answer is retrieved and displayed.
+The question is embedded
 
-If no sufficiently similar match is found, the bot indicates that it doesn't understand the query.
+The embedding queries the FAISS index
 
-The conversation history is maintained using Streamlit's session state.
+If a match is found (based on similarity score), the answer is shown
 
-Setup and Installation
-To run this application locally, follow these steps:
+If not, the bot politely indicates it's unsure
 
-Clone the repository (or save the code):
-If you have the code as a single file, save it as chatbot_app.py (or any .py extension).
+Session state is used to track the conversation
 
-Create a virtual environment (recommended):
+🛠️ Setup and Installation
+To run this project locally:
 
+✅ 1. Clone or Save the Repository
+Save your main file as chatbot_app.py (or any .py file).
+
+✅ 2. Create a Virtual Environment (Recommended)
+bash
+Copy
+Edit
 python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+# Activate:
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
 
-Install dependencies:
-Install all required Python packages using pip.
 
+✅ 3. Install Dependencies
+bash
+Copy
+Edit
 pip install streamlit requests beautifulsoup4 pandas transformers sentence-transformers faiss-cpu torch numpy
+▶️ Running the Application
+Start the app by running:
 
-Running the Application
-Once the dependencies are installed, you can run the Streamlit application from your terminal:
-
+bash
+Copy
+Edit
 streamlit run chatbot_app.py
+This will launch the chatbot in your default web browser.
 
-This command will open the Streamlit application in your default web browser.
+📁 Project Structure
+chatbot_app.py – Main script containing the complete logic.
 
-Project Structure
-The core logic is contained within a single Python script (chatbot_app.py in this example).
+load_and_process_faq_data() – Handles scraping, cleaning, deduplication, categorization
 
-load_and_process_faq_data(): Handles web scraping, data cleaning, deduplication, and categorization.
+load_models_and_create_index() – Loads models & sets up FAISS index
 
-load_models_and_create_index(): Loads the prithivida/parrot_paraphraser_on_T5 (for paraphrasing) and all-MiniLM-L6-v2 (for embeddings) models, and sets up the FAISS index.
+paraphrase_answer() – (Optional) Paraphrasing using T5 model
 
-paraphrase_answer(): (Optional) Function to rephrase answers using the T5-based model.
+find_best_faq_match() – Performs semantic search and threshold filtering
 
-find_best_faq_match(): Performs the semantic search against the FAISS index and applies the confidence threshold.
+Streamlit UI logic – Manages chat interface, user input, and session state
 
-Streamlit UI logic: Manages the web interface, user input, chat display, and session state.
+
